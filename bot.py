@@ -5,7 +5,6 @@ from database import Database
 
 
 import asyncio
-from config import API_TOKEN
 import json
 
 
