@@ -9,14 +9,14 @@ from config import API_TOKEN
 import json
 
 
-token = input("Введите токен бота: ")
+token = input("Type a bot's TOKEN: ")
 
 bot = Bot(token=token)
 storage = MemoryStorage()
 dp = Dispatcher(storage=storage)
 db = Database()
 
-print("Бот запущен")
+print("Bot have been started")
 
 @dp.message(Command(commands=['start']))
 async def send_welcome(message: types.Message):
