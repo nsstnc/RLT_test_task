@@ -1,17 +1,22 @@
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram.fsm.storage.memory import MemoryStorage
+from database import Database
+
 
 import asyncio
 from config import API_TOKEN
 import json
 
-token = API_TOKEN
+
+token = input("Введите токен бота: ")
 
 bot = Bot(token=token)
 storage = MemoryStorage()
 dp = Dispatcher(storage=storage)
+db = Database()
 
+print("Бот запущен")
 
 @dp.message(Command(commands=['start']))
 async def send_welcome(message: types.Message):
@@ -28,7 +33,8 @@ async def process_json(message: types.Message):
         data = json.loads(message.text)
         # если данные содержат нужные ключи
         if 'dt_from' in data and 'dt_upto' in data and 'group_type' in data:
-            await message.reply("данные приняты")
+            result = await db.aggregate_salaries(data['dt_from'], data['dt_upto'], data['group_type'])
+            await message.reply(result)
         else:
             await message.reply("Ошибка: Некорректный формат данных.")
     except json.JSONDecodeError:
