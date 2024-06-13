@@ -71,7 +71,7 @@ class Database():
 
         # запрос агрегации
         pipeline = [
-            {'$match': {'dt': {'$gte': dt_from, '$lt': dt_upto}}},
+            {'$match': {'dt': {'$gte': dt_from, '$lte': dt_upto}}},
             {'$group': {
                 '_id': group_id,
                 'total_amount': {'$sum': '$value'}
